@@ -89,17 +89,13 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 	var resultcr = 0, resultcd = 0;
 	var sand = options.isERSand ? "er" : getCommonStat(maintype, sidetype, ["er"], "er");
 	var goblet = options.isPhys ? "phys%" : (options.isAttack ? element + "%" : getCommonStat(maintype, sidetype, [], element + "%"));
-	var circlet = options.isHeal ? "heal%" : (options.isFav ? "cr" : getCommonStat(maintype, sidetype, ["cr", "cd"], "cr")); 
-	mainstat =
-		char + " add stats hp=4780 atk=311 " +
-		sand + "=" + getNumStr(getMain(sand)) + " " +
-		goblet + "=" + getNumStr(getMain(goblet)) + " ";
+	var circlet = options.isHeal ? "heal%" : (options.isFav ? "cr" : getCommonStat(maintype, sidetype, ["cr", "cd"], "cr"));
 	if (options.iscrcd) {
 		var score = basecr + basecd / 2 + 18 * 0.033 + 0.311;
 		var circletcr = 0, circletcd = 0;
 		var limit;
-		if(char == "ganyu" && options.dualCryo) limit = 1;
-		else if(element == "cryo" && options.dualCryo) limit = 0.9;
+		if (char == "ganyu" && options.dualCryo) limit = 1;
+		else if (element == "cryo" && options.dualCryo) limit = 0.9;
 		else limit = 0.8;
 		var sidecr = score / 2 - basecr;
 		var sidecd = score - basecd;
@@ -108,7 +104,7 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 			sidecr = 0.65;
 		}
 		console.log(sidecr, sidecd);
-		if (basecr + sidecr > limit){
+		if (basecr + sidecr > limit) {
 			sidecd += (basecr + sidecr - limit) * 2;
 			sidecr = limit - basecr;
 		}
@@ -118,12 +114,12 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 			sidecd = 0.066 * 18 + 0.622;
 		}
 		console.log(sidecr, sidecd);
-		if (sidecr * 2 > sidecd){
-			mainstat += "cr=" + getNumStr(getMain("cr")) + ";";
+		if (sidecr * 2 > sidecd) {
+			circlet = "cr";
 			sidecr -= 0.311;
 			circletcr = 0.311;
 		} else {
-			mainstat += "cd=" + getNumStr(getMain("cd")) + ";";
+			circlet = "cd";
 			sidecd -= 0.622;
 			circletcd = 0.622;
 		}
@@ -140,12 +136,11 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 		resultcr = basecr + circletcr + sidecr;
 		resultcd = basecd + circletcd + sidecd;
 	} else {
-		mainstat += circlet + "=" + getMain(circlet) + ";";
 		var allowedArtifact = 0;
 		var mainCount = 0;
-		if(maintype != sand) allowedArtifact += 1;
-		if(maintype != goblet) allowedArtifact += 1;
-		if(maintype != circlet) allowedArtifact += 1;
+		if (maintype != sand) allowedArtifact += 1;
+		if (maintype != goblet) allowedArtifact += 1;
+		if (maintype != circlet) allowedArtifact += 1;
 		mainCount = 8 + allowedArtifact * 2;
 		sidestat =
 			char + " add stats " + maintype + "=" + getNumStr(getSide(maintype) * mainCount);
@@ -160,6 +155,11 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 		}
 		sidestat += ";";
 	}
+	mainstat =
+		char + " add stats hp=4780 atk=311 " +
+		sand + "=" + getNumStr(getMain(sand)) + " " +
+		goblet + "=" + getNumStr(getMain(goblet)) + " " +
+		circlet + "=" + getMain(circlet) + ";";
 	var result = char_str + "\n" + weapon_str + "\n" + set_str + mainstat + "\n" + sidestat + "\n\n"
 	return [resultcr, resultcd, result];
 }
@@ -181,41 +181,41 @@ function getCharExtraCrit(char, weapon) {
 	return extras;
 }
 
-function getWeaponCrit(weapon, weapon_raw, refine, stack){
+function getWeaponCrit(weapon, weapon_raw, refine, stack) {
 	var cr = 0, cd = 0, tips = [];
 	if (crit_weapons[weapon] !== undefined) {
 		var wstat = crit_weapons[weapon];
 		if (wstat.basecr !== undefined) {
 			var effect = wstat.basecr;
 			cr += effect;
-			if(effect != 0) tips.push("武器 " + weapon_raw + " 的副词条提供了 " + getNumStr(effect * 100) + "% 暴击率");
+			if (effect != 0) tips.push("武器 " + weapon_raw + " 的副词条提供了 " + getNumStr(effect * 100) + "% 暴击率");
 		}
 		if (wstat.basecd !== undefined) {
 			var effect = wstat.basecd;
 			cd += effect;
-			if(effect != 0) tips.push("武器 " + weapon_raw + " 的副词条提供了 " + getNumStr(effect * 100) + "% 暴击伤害");
+			if (effect != 0) tips.push("武器 " + weapon_raw + " 的副词条提供了 " + getNumStr(effect * 100) + "% 暴击伤害");
 		}
 		if (wstat.fixedcr !== undefined) {
 			var effect = wstat.fixedcr[refine - 1];
 			cr += effect;
-			if(effect != 0) tips.push("武器 " + weapon_raw + " 的特效提供了 " + getNumStr(effect * 100) + "% 暴击率");
+			if (effect != 0) tips.push("武器 " + weapon_raw + " 的特效提供了 " + getNumStr(effect * 100) + "% 暴击率");
 		}
 		if (wstat.fixedcd !== undefined) {
 			var effect = wstat.fixedcd[refine - 1];
 			cd += effect;
-			if(effect != 0) tips.push("武器 " + weapon_raw + " 的特效提供了 " + getNumStr(effect * 100) + "% 暴击伤害");
+			if (effect != 0) tips.push("武器 " + weapon_raw + " 的特效提供了 " + getNumStr(effect * 100) + "% 暴击伤害");
 		}
 		if (wstat.effectcr !== undefined && stack != 0) {
 			var effect = wstat.effectcr[refine - 1];
 			cr += effect;
-			if(effect != 0){
+			if (effect != 0) {
 				tips.push("武器 " + weapon_raw + " 的特效提供了 " + getNumStr(effect * 100) + "% 暴击率（如需无视此特效，请将武器特效层数设置为 0）");
 			}
 		}
 		if (wstat.effectcd !== undefined && stack != 0) {
 			var effect = wstat.effectcd[refine - 1];
 			cd += effect;
-			if(effect != 0){
+			if (effect != 0) {
 				tips.push("武器 " + weapon_raw + " 的特效提供了 " + getNumStr(effect * 100) + "% 暴击伤害（如需无视此特效，请将武器特效层数设置为 0）");
 			}
 		}
@@ -223,10 +223,10 @@ function getWeaponCrit(weapon, weapon_raw, refine, stack){
 			var result = wstat.effectfunc(refine, stack);
 			cr += result[0];
 			cd += result[1];
-			if(result[0] != 0){
+			if (result[0] != 0) {
 				tips.push("武器 " + weapon_raw + " 的特效提供了 " + getNumStr(result[0] * 100) + "% 暴击率（如需无视此特效，请将武器特效层数设置为 0）");
 			}
-			if(result[1] != 0){
+			if (result[1] != 0) {
 				tips.push("武器 " + weapon_raw + " 的特效提供了 " + getNumStr(result[1] * 100) + "% 暴击伤害（如需无视此特效，请将武器特效层数设置为 0）");
 			}
 		}
@@ -237,33 +237,33 @@ function getWeaponCrit(weapon, weapon_raw, refine, stack){
 	return [cr, cd, tips];
 }
 
-function getArtifactCrit(artifact, artifact_raw, count, stack){
+function getArtifactCrit(artifact, artifact_raw, count, stack) {
 	var cr = 0, cd = 0, tips = [];
 	var count_str = (count == 2 ? "二件套" : "四件套");
 	var artifact_qstr = artifact + count;
 	if (crit_artifacts[artifact_qstr] !== undefined) {
 		var astat = crit_artifacts[artifact_qstr];
 		if (astat.fixedcr !== undefined) {
-			var effect = astat.fixedcr[refine - 1];
+			var effect = astat.fixedcr;
 			cr += effect;
-			if(effect != 0) tips.push("圣遗物 " + artifact_raw + " 的" + count_str + "特效提供了 " + getNumStr(effect * 100) + "% 暴击率");
+			if (effect != 0) tips.push("圣遗物 " + artifact_raw + " 的" + count_str + "特效提供了 " + getNumStr(effect * 100) + "% 暴击率");
 		}
 		if (astat.fixedcd !== undefined) {
-			var effect = astat.fixedcd[refine - 1];
+			var effect = astat.fixedcd;
 			cd += effect;
-			if(effect != 0) tips.push("圣遗物 " + artifact_raw + " 的" + count_str + "特效提供了 " + getNumStr(effect * 100) + "% 暴击伤害");
+			if (effect != 0) tips.push("圣遗物 " + artifact_raw + " 的" + count_str + "特效提供了 " + getNumStr(effect * 100) + "% 暴击伤害");
 		}
 		if (astat.effectcr !== undefined && stack != 0) {
 			var effect = astat.effectcr;
 			cr += effect;
-			if(effect != 0){
+			if (effect != 0) {
 				tips.push("圣遗物 " + artifact_raw + " 的" + count_str + "特效提供了 " + getNumStr(effect * 100) + "% 暴击率（如需无视此特效，请将圣遗物特效层数设置为 0）");
 			}
 		}
 		if (astat.effectcd !== undefined && stack != 0) {
 			var effect = astat.effectcd;
 			cd += effect;
-			if(effect != 0){
+			if (effect != 0) {
 				tips.push("圣遗物 " + artifact_raw + " 的" + count_str + "特效提供了 " + getNumStr(effect * 100) + "% 暴击伤害（如需无视此特效，请将圣遗物特效层数设置为 0）");
 			}
 		}
@@ -271,10 +271,10 @@ function getArtifactCrit(artifact, artifact_raw, count, stack){
 			var result = astat.effectfunc(stack);
 			cr += result[0];
 			cd += result[1];
-			if(result[0] != 0){
+			if (result[0] != 0) {
 				tips.push("圣遗物 " + artifact_raw + " 的" + count_str + "特效提供了 " + getNumStr(result[0] * 100) + "% 暴击率（如需无视此特效，请将圣遗物特效层数设置为 0）");
 			}
-			if(result[1] != 0){
+			if (result[1] != 0) {
 				tips.push("圣遗物 " + artifact_raw + " 的" + count_str + "特效提供了 " + getNumStr(result[1] * 100) + "% 暴击伤害（如需无视此特效，请将圣遗物特效层数设置为 0）");
 			}
 		}
@@ -299,8 +299,8 @@ function refreshStats() {
 	if (weapon_aliases[weapon] !== undefined) weapon = weapon_aliases[weapon];
 	if (artifact_aliases[set_1] !== undefined) set_1 = artifact_aliases[set_1];
 	if (artifact_aliases[set_2] !== undefined) set_2 = artifact_aliases[set_2];
-	if(set_1 == "") { set_1 = set_2; set_2 = ""; }
-	if(set_1 == set_2) { set_2 = ""; }
+	if (set_1 == "") { set_1 = set_2; set_2 = ""; }
+	if (set_1 == set_2) { set_2 = ""; }
 	var cons = parseInt(document.getElementById("char_cons").value);
 	if (isNaN(cons) || cons < 0 || cons > 6) cons = 0;
 	var refine = parseInt(document.getElementById("weapon_refine").value);
@@ -320,7 +320,7 @@ function refreshStats() {
 		}
 	} else {
 		for (var i = 0; i < elements.length; i++) {
-			if (element == elements[i]){
+			if (element == elements[i]) {
 				document.getElementById("element_" + elements[i]).disabled = false;
 				document.getElementById("element_" + elements[i]).checked = true;
 			} else {
@@ -360,10 +360,18 @@ function refreshStats() {
 		document.getElementById("side_cd").checked = false;
 		document.getElementById("side_cd").disabled = true;
 		document.getElementById("crit_opt").hidden = false;
+		document.getElementById("isheal").checked = false;
+		document.getElementById("isheal").disabled = true;
+		document.getElementById("isfav").checked = false;
+		document.getElementById("isfav").disabled = true;
 	} else {
 		document.getElementById("main_cr").disabled = false;
 		document.getElementById("main_cd").disabled = false;
 		document.getElementById("crit_opt").hidden = true;
+		if(!document.getElementById("isheal").checked && !document.getElementById("isfav").checked){
+			document.getElementById("isheal").disabled = false;
+			document.getElementById("isfav").disabled = false;
+		}
 		l.push("cr");
 		l.push("cd");
 	}
@@ -388,13 +396,13 @@ function refreshStats() {
 	}
 	var basecr = 0.05, basecd = 0.5, tips = [];
 	for (var i = 0; i < crchars.length; i++) {
-		if (crchars[i][0] == char){
+		if (crchars[i][0] == char) {
 			basecr += crchars[i][1];
 			tips.push("角色 " + char_raw + " 的突破属性提供了 " + getNumStr(crchars[i][1] * 100) + "% 暴击率");
 		}
 	}
 	for (var i = 0; i < cdchars.length; i++) {
-		if (cdchars[i][0] == char){
+		if (cdchars[i][0] == char) {
 			basecd += cdchars[i][1];
 			tips.push("角色 " + char_raw + " 的突破属性提供了 " + getNumStr(cdchars[i][1] * 100) + "% 暴击伤害");
 		}
@@ -406,45 +414,45 @@ function refreshStats() {
 	tips = tips.concat(wcrit[2]);
 
 	var acrit_1, acrit_2;
-	if(set_2 == ""){
+	if (set_2 == "") {
 		acrit_1 = getArtifactCrit(set_1, set_1_raw, 2, 0);
 		acrit_2 = getArtifactCrit(set_1, set_1_raw, 4, astack);
 	} else {
 		acrit_1 = getArtifactCrit(set_1, set_1_raw, 2, 0);
 		acrit_2 = getArtifactCrit(set_2, set_2_raw, 2, 0);
 	}
-	
+
 	basecr += acrit_1[0];
 	basecd += acrit_1[1];
 	tips = tips.concat(acrit_1[2]);
-	
+
 	basecr += acrit_2[0];
 	basecd += acrit_2[1];
 	tips = tips.concat(acrit_2[2]);
 
-	if(document.getElementById("double_cryo").checked){
+	if (document.getElementById("double_cryo").checked) {
 		basecr += 0.15;
 		tips.push("双冰共鸣提供了 15% 暴击率");
 	}
 
 	var extracr = parseFloat(document.getElementById("extracr").value) / 100;
 	var extracd = parseFloat(document.getElementById("extracd").value) / 100;
-	if(isNaN(extracr)) extracr = 0;
-	if(isNaN(extracd)) extracd = 0;
-	if(extracr != 0){
+	if (isNaN(extracr)) extracr = 0;
+	if (isNaN(extracd)) extracd = 0;
+	if (extracr != 0) {
 		basecr += extracr;
 		tips.push("手动添加 " + getNumStr(extracr * 100) + "% 暴击率");
 	}
-	if(extracd != 0){
+	if (extracd != 0) {
 		basecd += extracd;
 		tips.push("手动添加 " + getNumStr(extracd * 100) + "% 暴击伤害");
 	}
 
-	while(document.getElementById("crit_srcs").children.length > 0) {
+	while (document.getElementById("crit_srcs").children.length > 0) {
 		document.getElementById("crit_srcs").removeChild(document.getElementById("crit_srcs").children[0]);
 	}
-	
-	for(var i = 0; i < tips.length; i++){
+
+	for (var i = 0; i < tips.length; i++) {
 		var div = document.createElement("div");
 		var text = document.createTextNode(tips[i]);
 		div.appendChild(text);
@@ -471,7 +479,7 @@ function refreshStats() {
 		side,
 		options
 	);
-	if(document.getElementById("iscrcd").checked){
+	if (document.getElementById("iscrcd").checked) {
 		document.getElementById("crit_result").textContent = "面板暴击：" + getNumStr(std[0] * 100) + "% / " + getNumStr(std[1] * 100) + "%";
 	} else {
 		document.getElementById("crit_result").textContent = "";
