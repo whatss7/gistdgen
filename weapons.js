@@ -25,7 +25,7 @@ crit_weapons = {
 	},
 	"redhornstonethresher": { basecd: 0.882 },
 	// bow
-	"messenger": { basecd: 0.312, effectcr: 1 },
+	"messenger": { basecd: 0.312, effectcr: [1, 1, 1, 1, 1] },
 	"slingshot": { basecd: 0.312 },
 	"sharpshootersoath": { basecd: 0.469 },
 	"royalbow": { effectcr: [0.06, 0.065, 0.07, 0.075, 0.08], tip: "宗室系列武器建议手动配平，所给出数值仅为粗略估计" },
