@@ -480,6 +480,7 @@ weapon_aliases = {
 	"天目影打刀": "amenomakageuchi",
 	"天目": "amenomakageuchi",
 	"tianmuyingdadao": "amenomakageuchi",
+	"tianmu": "amenomakageuchi",
 	// amosbow
 	"amosbow": "amosbow",
 	"amos": "amosbow",
@@ -586,7 +587,9 @@ weapon_aliases = {
 	// dodocotales
 	"dodocotales": "dodocotales",
 	"嘟嘟可故事集": "dodocotales",
+	"嘟嘟可": "dodocotales",
 	"dudukegushiji": "dodocotales",
+	"duduke": "dodocotales",
 	// dragonsbane
 	"dragonsbane": "dragonsbane",
 	"匣里灭辰": "dragonsbane",
@@ -594,7 +597,9 @@ weapon_aliases = {
 	// dragonspinespear
 	"dragonspinespear": "dragonspinespear",
 	"龙脊长枪": "dragonspinespear",
+	"龙脊": "dragonspinespear",
 	"longjichangqiang": "dragonspinespear",
+	"longji": "dragonspinespear",
 	// dullblade
 	"dullblade": "dullblade",
 	"无锋剑": "dullblade",
@@ -752,7 +757,9 @@ weapon_aliases = {
 	"神乐": "kagurasverity",
 	"果盘": "kagurasverity",
 	"shenlezhizhenyi": "kagurasverity",
+	"shenyuezhizhenyi": "kagurasverity",
 	"shenle": "kagurasverity",
+	"shenyue": "kagurasverity",
 	"guopan": "kagurasverity",
 	// katsuragikirinagamasa
 	"katsuragikirinagamasa": "katsuragikirinagamasa",
@@ -978,7 +985,9 @@ weapon_aliases = {
 	// royalspear
 	"royalspear": "royalspear",
 	"宗室猎枪": "royalspear",
+	"宗室枪": "royalspear",
 	"zongshilieqiang": "royalspear",
+	"zongshiqiang": "royalspear",
 	// rust
 	"rust": "rust",
 	"弓藏": "rust",
