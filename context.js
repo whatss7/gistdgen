@@ -103,10 +103,6 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 		if(char == "ganyu" && options.dualCryo) limit = 1;
 		else if(element == "cryo" && options.dualCryo) limit = 0.9;
 		else limit = 0.8;
-		if (sidecr < 0) {
-			sidecr = 0;
-			sidecd = 0.33 * 18;
-		}
 		if (sidecr > 0.65) {
 			sidecd += (sidecr - 0.65) * 2;
 			sidecr = 0.65;
@@ -114,6 +110,10 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 		if (basecr + sidecr > limit){
 			sidecd += (basecr + sidecr - limit) * 2;
 			sidecr = limit - basecr;
+		}
+		if (sidecr < 0) {
+			sidecr = 0;
+			sidecd = 0.33 * 18;
 		}
 		if (sidecr * 2 > sidecd){
 			mainstat += "cr=" + getNumStr(getMain("cr")) + ";";
