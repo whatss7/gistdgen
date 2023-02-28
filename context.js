@@ -95,26 +95,29 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 		sand + "=" + getNumStr(getMain(sand)) + " " +
 		goblet + "=" + getNumStr(getMain(goblet)) + " ";
 	if (options.iscrcd) {
-		var score = basecr + basecd / 2 + 18 * 0.033 + 0.622;
-		var sidecr, sidecd, circletcr = 0, circletcd = 0;
-		var sidecr = score / 2 - basecr;
-		var sidecd = score - basecd;
+		var score = basecr + basecd / 2 + 18 * 0.033 + 0.311;
+		var circletcr = 0, circletcd = 0;
 		var limit;
 		if(char == "ganyu" && options.dualCryo) limit = 1;
 		else if(element == "cryo" && options.dualCryo) limit = 0.9;
 		else limit = 0.8;
+		var sidecr = score / 2 - basecr;
+		var sidecd = score - basecd;
 		if (sidecr > 0.65) {
 			sidecd += (sidecr - 0.65) * 2;
 			sidecr = 0.65;
 		}
+		console.log(sidecr, sidecd);
 		if (basecr + sidecr > limit){
 			sidecd += (basecr + sidecr - limit) * 2;
 			sidecr = limit - basecr;
 		}
+		console.log(sidecr, sidecd);
 		if (sidecr < 0) {
 			sidecr = 0;
-			sidecd = 0.33 * 18;
+			sidecd = 0.066 * 18 + 0.622;
 		}
+		console.log(sidecr, sidecd);
 		if (sidecr * 2 > sidecd){
 			mainstat += "cr=" + getNumStr(getMain("cr")) + ";";
 			sidecr -= 0.311;
@@ -124,6 +127,7 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 			sidecd -= 0.622;
 			circletcd = 0.622;
 		}
+		console.log(sidecr, sidecd);
 		sidestat = char + " add stats cr=" + getNumStr(sidecr) + " cd=" + getNumStr(sidecd);
 		sidestat += " " + maintype + "=" + getNumStr(getSide(maintype) * 6);
 		if (sidetype.length == 1) sidestat += " " + sidetype[0] + "=" + getNumStr(getSide(sidetype[0]) * 4);
