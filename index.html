@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script type="text/javascript" src="./aliases.js"></script>
+	<script type="text/javascript" src="./artifacts.js"></script>
+	<script type="text/javascript" src="./chars.js"></script>
+	<script type="text/javascript" src="./weapons.js"></script>
+	<script type="text/javascript" src="./context.js"></script>
+</head>
+
+<body>
+	<div>
+		<fieldset>
+			<legend>基本信息：</legend>
+			<div>
+				<div style="display: flex; flex-direction: row;">
+					<div>
+						<label for="char_name">角色名称：</label>
+						<input type="text" id="char_name" onchange="refreshStats()" />
+					</div>
+					<div>
+						<label for="char_cons">命座：</label>
+						<input type="number" id="char_cons" min="0" max="6" value="0" onchange="refreshStats()" />
+					</div>
+				</div>
+				<div style="display: flex; flex-direction: row;">
+					<div>
+						<label for="weapon_name">武器名称：</label>
+						<input type="text" id="weapon_name" onchange="refreshStats()" />
+					</div>
+					<div>
+						<label for="weapon_refine">精炼：</label>
+						<input type="number" id="weapon_refine" min="1" max="5" value="1" onchange="refreshStats()" />
+					</div>
+					<div>
+						<label for="weapon_stack">特效层数：</label>
+						<input type="number" id="weapon_stack" min="0" max="99" value="1" onchange="refreshStats()" />
+					</div>
+				</div>
+				<div style="display: flex; flex-direction: row;">
+					<div>
+						<label for="set_name_1">套装一：</label>
+						<input type="text" id="set_name_1" style="width: 80px" onchange="refreshStats()" />
+					</div>
+					<div>
+						<label for="set_name_2">套装二：</label>
+						<input type="text" id="set_name_2" style="width: 80px" onchange="refreshStats()" />
+					</div>
+					<div>
+						<label for="set_stack">套装一四件套特效层数：</label>
+						<input type="number" id="set_stack" min="0" max="99" value="1" onchange="refreshStats()" />
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>角色元素：</legend>
+			<div style="display: flex; flex-direction: row">
+				<div>
+					<input type="radio" name="elementset" id="element_anemo" onclick="refreshStats()" checked />
+					<label for="element_anemo">风</label>
+				</div>
+				<div>
+					<input type="radio" name="elementset" id="element_geo" onclick="refreshStats()" />
+					<label for="element_geo">岩</label>
+				</div>
+				<div>
+					<input type="radio" name="elementset" id="element_electro" onclick="refreshStats()" />
+					<label for="element_electro">雷</label>
+				</div>
+				<div>
+					<input type="radio" name="elementset" id="element_dendro" onclick="refreshStats()" />
+					<label for="element_dendro">草</label>
+				</div>
+				<div>
+					<input type="radio" name="elementset" id="element_hydro" onclick="refreshStats()" />
+					<label for="element_hydro">水</label>
+				</div>
+				<div>
+					<input type="radio" name="elementset" id="element_pyro" onclick="refreshStats()" />
+					<label for="element_pyro">火</label>
+				</div>
+				<div>
+					<input type="radio" name="elementset" id="element_cryo" onclick="refreshStats()" />
+					<label for="element_cryo">冰</label>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div>
+		<fieldset>
+			<legend>选择有效主属性：</legend>
+			<div style="display: flex; flex-direction: row">
+				<div>
+					<input type="radio" name="mainset" id="main_atk" onclick="refreshStats()" checked />
+					<label for="main_atk">攻击力</label>
+				</div>
+				<div>
+					<input type="radio" name="mainset" id="main_def" onclick="refreshStats()" />
+					<label for="main_def">防御力</label>
+				</div>
+				<div>
+					<input type="radio" name="mainset" id="main_hp" onclick="refreshStats()" />
+					<label for="main_hp">生命值</label>
+				</div>
+				<div>
+					<input type="radio" name="mainset" id="main_er" onclick="refreshStats()" />
+					<label for="main_er">元素充能效率</label>
+				</div>
+				<div>
+					<input type="radio" name="mainset" id="main_em" onclick="refreshStats()" />
+					<label for="main_em">元素精通</label>
+				</div>
+				<div>
+					<input type="radio" name="mainset" id="main_cr" onclick="refreshStats()" disabled />
+					<label for="main_cr">暴击率</label>
+				</div>
+				<div>
+					<input type="radio" name="mainset" id="main_cd" onclick="refreshStats()" disabled />
+					<label for="main_cd">暴击伤害</label>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div>
+		<fieldset>
+			<legend>选择有效副属性：</legend>
+			<div style="display: flex; flex-direction: row">
+				<div>
+					<input type="checkbox" id="side_atk" onclick="refreshStats()" disabled />
+					<label for="side_atk">攻击力</label>
+				</div>
+				<div>
+					<input type="checkbox" id="side_def" onclick="refreshStats()" />
+					<label for="side_def">防御力</label>
+				</div>
+				<div>
+					<input type="checkbox" id="side_hp" onclick="refreshStats()" />
+					<label for="side_hp">生命值</label>
+				</div>
+				<div>
+					<input type="checkbox" id="side_er" onclick="refreshStats()" />
+					<label for="side_er">元素充能效率</label>
+				</div>
+				<div>
+					<input type="checkbox" id="side_em" onclick="refreshStats()" />
+					<label for="side_em">元素精通</label>
+				</div>
+				<div>
+					<input type="checkbox" id="side_cr" onclick="refreshStats()" disabled />
+					<label for="side_cr">暴击率</label>
+				</div>
+				<div>
+					<input type="checkbox" id="side_cd" onclick="refreshStats()" disabled />
+					<label for="side_cd">暴击伤害</label>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div>
+		<fieldset>
+			<legend>双暴配平</legend>
+			<div>
+				<input type="checkbox" id="iscrcd" onclick="refreshStats()" checked />
+				<label for="iscrcd">双暴为主的词条分配</label>
+			</div>
+			<div id="crit_opt">
+				<fieldset>
+					<legend>双爆来源，未在此处列出的暴击与暴伤提升需要手动添加</legend>
+					<div>
+						<input type="checkbox" id="double_cryo" onclick="refreshStats()" />
+						<label for="double_cryo">双冰共鸣 15% 暴击率</label>
+					</div>
+					<div>
+						<label for="extracr">其他额外暴击：</label>
+						<input type="text" id="extracr" style="width: 80px" onchange="refreshStats()" />
+						<label for="extracr">%</label>
+					</div>
+					<div>
+						<label for="extracd">其他额外暴伤：</label>
+						<input type="text" id="extracd" style="width: 80px" onchange="refreshStats()" />
+						<label for="extracd">%</label>
+					</div>
+					<div id="crit_srcs"></div>
+				</fieldset>
+			</div>
+		</fieldset>
+	</div>
+	<div>
+		<fieldset>
+			<legend>选择杂项：</legend>
+			<div>
+				<input type="checkbox" id="isersand" onclick="refreshStats()" />
+				<label for="isersand">需要充能（使用元素充能效率时之沙）</label>
+			</div>
+			<div>
+				<input type="checkbox" id="isattack" onclick="refreshStats()" checked />
+				<label for="isattack">输出角色（使用伤害加成空之杯）</label>
+			</div>
+			<div>
+				<input type="checkbox" id="isphys" onclick="refreshStats()" />
+				<label for="isphys">以物理伤害为主（使用物理伤害加成空之杯）</label>
+			</div>
+			<div>
+				<input type="checkbox" id="isfav" onclick="refreshStats()" />
+				<label for="isfav">需要触发西风（使用暴击率理之冠）</label>
+			</div>
+			<div>
+				<input type="checkbox" id="isheal" onclick="refreshStats()" />
+				<label for="isheal">奶妈（使用治疗加成理之冠）</label>
+			</div>
+		</fieldset>
+	</div>
+	<div>
+		<fieldset>
+			<legend>结果</legend>
+			<div id="crit_result"></div>
+			<textarea id="result" rows="10" cols="100"></textarea>
+		</fieldset>
+	</div>
+</body>
+
+</html>
