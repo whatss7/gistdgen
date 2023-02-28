@@ -94,8 +94,8 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 		var score = basecr + basecd / 2 + 18 * 0.033 + 0.311;
 		var circletcr = 0, circletcd = 0;
 		var limit;
-		if (char == "ganyu" && options.dualCryo) limit = 1;
-		else if (element == "cryo" && options.dualCryo) limit = 0.9;
+		if (char == "ganyu" && options.blizzard) limit = 1;
+		else if (element == "cryo" && options.blizzard) limit = 0.9;
 		else limit = 0.8;
 		var sidecr = score / 2 - basecr;
 		var sidecd = score - basecd;
@@ -141,16 +141,13 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 		if (maintype != sand) allowedArtifact += 1;
 		if (maintype != goblet) allowedArtifact += 1;
 		if (maintype != circlet) allowedArtifact += 1;
-		mainCount = 8 + allowedArtifact * 2;
+		mainCount = 8 + Math.min(allowedArtifact * 3, 6);
 		sidestat =
 			char + " add stats " + maintype + "=" + getNumStr(getSide(maintype) * mainCount);
-		if (sidetype.length >= 1) {
-			sidestat += " " + sidetype[0] + "=" + getNumStr(getSide(sidetype[0]) * 6);
-			if (sidetype.length == 2) sidestat += " " + sidetype[1] + "=" + getNumStr(getSide(sidetype[1]) * 4);
-			else {
-				for (var i = 1; i < sidetype.length; i++) {
-					sidestat += " " + sidetype[i] + "=" + getNumStr(getSide(sidetype[i]) * 3);
-				}
+		if (sidetype.length == 1) sidestat += " " + sidetype[0] + "=" + getNumStr(getSide(sidetype[0]) * 4);
+		else {
+			for (var i = 0; i < sidetype.length; i++) {
+				sidestat += " " + sidetype[i] + "=" + getNumStr(getSide(sidetype[i]) * 3);
 			}
 		}
 		sidestat += ";";
@@ -285,12 +282,16 @@ function getArtifactCrit(artifact, artifact_raw, count, stack) {
 	return [cr, cd, tips];
 }
 
+var prevOptions = {}
+
 function refreshStats() {
 	options = {}
 	var char = document.getElementById("char_name").value.trim().toLowerCase();
 	var weapon = document.getElementById("weapon_name").value.trim().toLowerCase();
 	var set_1 = document.getElementById("set_name_1").value.trim().toLowerCase();
 	var set_2 = document.getElementById("set_name_2").value.trim().toLowerCase();
+	if (set_1 == "") { set_1 = set_2; set_2 = ""; }
+	if (set_1 == set_2) { set_2 = ""; }
 	var char_raw = char;
 	var weapon_raw = weapon;
 	var set_1_raw = set_1;
@@ -299,8 +300,6 @@ function refreshStats() {
 	if (weapon_aliases[weapon] !== undefined) weapon = weapon_aliases[weapon];
 	if (artifact_aliases[set_1] !== undefined) set_1 = artifact_aliases[set_1];
 	if (artifact_aliases[set_2] !== undefined) set_2 = artifact_aliases[set_2];
-	if (set_1 == "") { set_1 = set_2; set_2 = ""; }
-	if (set_1 == set_2) { set_2 = ""; }
 	var cons = parseInt(document.getElementById("char_cons").value);
 	if (isNaN(cons) || cons < 0 || cons > 6) cons = 0;
 	var refine = parseInt(document.getElementById("weapon_refine").value);
@@ -309,6 +308,11 @@ function refreshStats() {
 	if (isNaN(stack) || stack < 0) stack = 0;
 	var astack = parseInt(document.getElementById("set_stack").value);
 	if (isNaN(astack) || astack < 0) astack = 0;
+	var iscrcd = document.getElementById("iscrcd").checked;
+	if (prevOptions.iscrcd != iscrcd) {
+		document.getElementById("isattack").checked = iscrcd;
+	}
+	prevOptions.iscrcd = iscrcd;
 
 	var elements = ["anemo", "geo", "electro", "dendro", "hydro", "pyro", "cryo"];
 	var element = getElement(char);
@@ -350,7 +354,7 @@ function refreshStats() {
 		document.getElementById("isphys").checked = false;
 		document.getElementById("isphys").disabled = true;
 	}
-	if (document.getElementById("iscrcd").checked) {
+	if (iscrcd) {
 		document.getElementById("main_cr").checked = false;
 		document.getElementById("main_cr").disabled = true;
 		document.getElementById("side_cr").checked = false;
@@ -368,13 +372,14 @@ function refreshStats() {
 		document.getElementById("main_cr").disabled = false;
 		document.getElementById("main_cd").disabled = false;
 		document.getElementById("crit_opt").hidden = true;
-		if(!document.getElementById("isheal").checked && !document.getElementById("isfav").checked){
+		if (!document.getElementById("isheal").checked && !document.getElementById("isfav").checked) {
 			document.getElementById("isheal").disabled = false;
 			document.getElementById("isfav").disabled = false;
 		}
 		l.push("cr");
 		l.push("cd");
 	}
+
 	main = "atk%";
 	side = []
 	for (var i = 0; i < l.length; i++) {
@@ -466,6 +471,7 @@ function refreshStats() {
 	options.isHeal = document.getElementById("isheal").checked;
 	options.isFav = document.getElementById("isfav").checked;
 	options.dualCryo = document.getElementById("double_cryo").checked;
+	options.blizzard = (set_1 == "blizzardstrayer" && set_2 == "");
 	var std = getStd(
 		char,
 		element,
@@ -480,7 +486,7 @@ function refreshStats() {
 		options
 	);
 	if (document.getElementById("iscrcd").checked) {
-		document.getElementById("crit_result").textContent = "面板暴击：" + getNumStr(std[0] * 100) + "% / " + getNumStr(std[1] * 100) + "%";
+		document.getElementById("crit_result").textContent = "实际暴击：" + getNumStr(std[0] * 100) + "% / " + getNumStr(std[1] * 100) + "%";
 	} else {
 		document.getElementById("crit_result").textContent = "";
 	}

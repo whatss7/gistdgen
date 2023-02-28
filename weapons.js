@@ -31,9 +31,9 @@ crit_weapons = {
 	"royalbow": { effectcr: [0.06, 0.065, 0.07, 0.075, 0.08], tip: "宗室系列武器建议手动配平，所给出数值仅为粗略估计" },
 	"blackcliffwarbow": { basecd: 0.368 },
 	"theviridescenthunt": { basecr: 0.276 },
-	"tiankongzhiyi": { basecr: 0.221, fixedcd: [0.2, 0.25, 0.3, 0.35, 0.4] },
+	"skywardharp": { basecr: 0.221, fixedcd: [0.2, 0.25, 0.3, 0.35, 0.4] },
 	"hunterspath": { basecr: 0.441 },
-	"thunderingpulse": { basecr: 0.662 },
+	"thunderingpulse": { basecd: 0.662 },
 	"aquasimulacra": { basecd: 0.882 },
 	"polarstar": { basecr: 0.331 },
 	// catalyst

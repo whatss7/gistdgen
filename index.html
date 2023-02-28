@@ -82,7 +82,44 @@
 	</div>
 	<div>
 		<fieldset>
-			<legend>选择有效主属性：</legend>
+			<legend>双暴配平</legend>
+			<div>
+				<input type="checkbox" id="iscrcd" onclick="refreshStats()" checked />
+				<label for="iscrcd">双暴为主的词条分配</label>
+			</div>
+			<div id="crit_opt">
+				<fieldset>
+					<legend>双爆来源，未在此处列出的暴击与暴伤提升需要手动添加</legend>
+					<div>
+						<label for="weapon_stack">武器暴击相关特效层数：</label>
+						<input type="number" id="weapon_stack" min="0" max="99" value="1" onchange="refreshStats()" />
+					</div>
+					<div>
+						<label for="set_stack">圣遗物四件套特效层数：</label>
+						<input type="number" id="set_stack" min="0" max="99" value="1" onchange="refreshStats()" />
+					</div>
+					<div>
+						<input type="checkbox" id="double_cryo" onclick="refreshStats()" />
+						<label for="double_cryo">双冰共鸣 15% 暴击率</label>
+					</div>
+					<div>
+						<label for="extracr">其他额外暴击：</label>
+						<input type="text" id="extracr" style="width: 80px" onchange="refreshStats()" />
+						<label for="extracr">%</label>
+					</div>
+					<div>
+						<label for="extracd">其他额外暴伤：</label>
+						<input type="text" id="extracd" style="width: 80px" onchange="refreshStats()" />
+						<label for="extracd">%</label>
+					</div>
+					<div id="crit_srcs"></div>
+				</fieldset>
+			</div>
+		</fieldset>
+	</div>
+	<div>
+		<fieldset>
+			<legend>选择主有效属性：</legend>
 			<div style="display: flex; flex-direction: row">
 				<div>
 					<input type="radio" name="mainset" id="main_atk" onclick="refreshStats()" checked />
@@ -117,7 +154,7 @@
 	</div>
 	<div>
 		<fieldset>
-			<legend>选择有效副属性：</legend>
+			<legend>选择副有效属性：</legend>
 			<div style="display: flex; flex-direction: row">
 				<div>
 					<input type="checkbox" id="side_atk" onclick="refreshStats()" disabled />
@@ -147,43 +184,6 @@
 					<input type="checkbox" id="side_cd" onclick="refreshStats()" disabled />
 					<label for="side_cd">暴击伤害</label>
 				</div>
-			</div>
-		</fieldset>
-	</div>
-	<div>
-		<fieldset>
-			<legend>双暴配平</legend>
-			<div>
-				<input type="checkbox" id="iscrcd" onclick="refreshStats()" checked />
-				<label for="iscrcd">双暴为主的词条分配</label>
-			</div>
-			<div id="crit_opt">
-				<fieldset>
-					<legend>双爆来源，未在此处列出的暴击与暴伤提升需要手动添加</legend>
-					<div>
-						<label for="weapon_stack">武器暴击相关特效层数：</label>
-						<input type="number" id="weapon_stack" min="0" max="99" value="1" onchange="refreshStats()" />
-					</div>
-					<div>
-						<label for="set_stack">圣遗物四件套特效层数：</label>
-						<input type="number" id="set_stack" min="0" max="99" value="1" onchange="refreshStats()" />
-					</div>
-					<div>
-						<input type="checkbox" id="double_cryo" onclick="refreshStats()" />
-						<label for="double_cryo">双冰共鸣 15% 暴击率</label>
-					</div>
-					<div>
-						<label for="extracr">其他额外暴击：</label>
-						<input type="text" id="extracr" style="width: 80px" onchange="refreshStats()" />
-						<label for="extracr">%</label>
-					</div>
-					<div>
-						<label for="extracd">其他额外暴伤：</label>
-						<input type="text" id="extracd" style="width: 80px" onchange="refreshStats()" />
-						<label for="extracd">%</label>
-					</div>
-					<div id="crit_srcs"></div>
-				</fieldset>
 			</div>
 		</fieldset>
 	</div>
