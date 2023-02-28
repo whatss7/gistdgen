@@ -27,7 +27,7 @@ function getMain(stat) {
 
 	if (stat == "cr") return 0.311;
 	if (stat == "cd") return 0.622;
-	if (stat == "heal%") return 0.359;
+	if (stat == "heal") return 0.359;
 
 	return 0;
 }
@@ -89,7 +89,7 @@ function getStd(char, element, cons, weapon, refine, crit, set_1, set_2, maintyp
 	var resultcr = 0, resultcd = 0;
 	var sand = options.isERSand ? "er" : getCommonStat(maintype, sidetype, ["er"], "er");
 	var goblet = options.isPhys ? "phys%" : (options.isAttack ? element + "%" : getCommonStat(maintype, sidetype, [], element + "%"));
-	var circlet = options.isHeal ? "heal%" : (options.isFav ? "cr" : getCommonStat(maintype, sidetype, ["cr", "cd"], "cr"));
+	var circlet = options.isHeal ? "heal" : (options.isFav ? "cr" : getCommonStat(maintype, sidetype, ["cr", "cd"], "cr"));
 	if (options.iscrcd) {
 		var score = basecr + basecd / 2 + 18 * 0.033 + 0.311;
 		var circletcr = 0, circletcd = 0;
